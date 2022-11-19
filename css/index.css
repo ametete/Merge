@@ -23,6 +23,34 @@ h2 {
     margin: 5px;
 }
 
+#SettingsBtn {
+    box-align: right;
+    margin:5px;
+
+    transition: 0.2s;
+}
+
+#SettingsBtn:hover {
+    /* color: gold; */
+    text-shadow: 0 0 5px gold;
+}
+
+#Settings {
+    display: flex;
+    background-color: #363b41;
+    border-radius: 0.25rem;
+    transition: 0.5s;
+    position: absolute;
+    right: 1%;
+    margin: 5px;
+    border: 3px solid;
+
+    height: 90%;
+    width: 300px;
+    /* Glow effect */
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+}
+
 #UpgradesBtn {
     box-align: right;
     margin:5px;

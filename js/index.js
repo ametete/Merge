@@ -143,6 +143,14 @@ function merge_clicked(){
 };
 
 let UpgradeMenuActive = false;
+let SettingsActive = false;
+
+function toggleSettings() {
+    // let menu = document.querySelector("#Settings");
+
+    SettingsActive = !SettingsActive;
+
+}
 
 function toggleUpgradeMenu() {
     let menu = document.querySelector("#Upgrades");
