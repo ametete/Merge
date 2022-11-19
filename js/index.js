@@ -18,15 +18,19 @@ function addBall(num) {
         moneygain=0;
         for (const elem in currentballs) {
             if (Object.hasOwnProperty.call(currentballs, elem)) {
-                const element = currentballs[elem];
-                if (element!=1&&element!=0) {
-                    moneygain+=2^(element-1);
+                if (elem!=1&&elem!=0) {
+                    moneygain+=2^(elem-1);
                 } else {
                     moneygain+=1 ;
                 }
             }
         }
     }
+    str = "";
+    for (const i in currentballs) {
+        str += i + ",";
+    }
+    document.querySelector("#CurrentMerges").innerHTML = "Current Merges:\n"+str;
 }
 
 setInterval(() => {
