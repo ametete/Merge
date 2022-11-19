@@ -1,3 +1,4 @@
+
 let Studs = 0;
 let clicksleft = 10;
 let moneygain = 0;
@@ -40,7 +41,7 @@ function addBall(num) {
 setInterval(() => {
     Studs+=moneygain;
     console.warn(moneygain);
-    document.querySelector("#Studs").innerHTML = "Studs: "+Studs;
+    document.querySelector("#Studs").innerHTML = "Studs: " + numberformat.formatShort(Studs, {sigfigs: 2});
 }, 1000);
 
 function merge_clicked(){
