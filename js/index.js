@@ -1,5 +1,6 @@
 let settings = {
     BGaudioMuted: false,
+    debugEnabled: false
 }
 
 let Studs = 0;
@@ -17,9 +18,30 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 })
 
-function toggleMute() {
+function settingsChanged() {
     let audio = document.getElementById("BGaudio");
-    audio.muted = !audio.muted;
+
+    audio.muted = settings.BGaudioMuted;
+    debug.enabled = settings.debugEnabled;
+}
+
+window.addEventListener("message", event => {
+    if (event.channel === "settingsChanged") {
+        settingsChanged();
+    }
+})
+
+function changeSetting(key, val) {
+    if (key && val) {
+        settings[key] = val;
+        postMessage({channel: "settingsChanged"});
+    } else {
+        console.error(`[SETTING ERROR] key or val null/undefined\n${key}: ${val}`);
+    }
+}
+
+function toggleMute() {
+    changeSetting("BGaudioMuted", !settings.BGaudioMuted);
  }
 
 function updateCurrentMergesTxt() {
@@ -92,7 +114,7 @@ function addBall(num) {
 setInterval(() => {
     Studs+=moneygain;
     debug.log(moneygain);
-    
+
     // This is going to be an example of why I switched to this
     // when you used sigfigs: 2 with something below 100k you can't get 1k or 10k etc and just get
     // 1,000 and 10,000
