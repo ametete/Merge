@@ -4,15 +4,42 @@ let clicksleft = 10;
 let moneygain = 0;
 let currentballs = {};
 
+let DOMLoaded = false;
+let DOMLoadedCallbacks = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+    DOMLoaded = true;
+    DOMLoadedCallbacks.forEach((func) => {
+        if (typeof(func) === "function") func();
+    })
+})
+
+function updateCurrentMergesTxt() {
+    let str = "";
+    for (const i in currentballs) {
+        if (Object.hasOwnProperty.call(currentballs, i)) {
+            const element = currentballs[i];
+            if (element > 0) str += i + ", ";
+        }
+    }
+    str = str.substring(0, str.length-2);
+    document.querySelector("#CurrentMerges").innerHTML = "Current Merges:\n"+str;
+}
+
 function LoadData() {
     let data = dataHandler.getData();
     currentballs = data.currentballs;
     Studs = data.Studs;
     clicksleft = data.clicksleft;
     moneygain = data.moneygain;
+
+    if (!DOMLoaded) DOMLoadedCallbacks.push(updateCurrentMergesTxt);
+    else updateCurrentMergesTxt();
 }
 
 function SaveData() {
+    // document.querySelector("#Saving")
+
     let data = dataHandler.getData();
     data.currentballs = currentballs;
     data.Studs = Studs;
@@ -23,7 +50,7 @@ function SaveData() {
 
 LoadData();
 
-setInterval(SaveData, 30000)
+setInterval(SaveData, 600000);
 
 function addBall(num) {
     if (isNaN(Number(num))) return;
@@ -48,15 +75,7 @@ function addBall(num) {
             }
         }
     }
-    let str = "";
-    for (const i in currentballs) {
-        if (Object.hasOwnProperty.call(currentballs, i)) {
-            const element = currentballs[i];
-            if (element > 0) str += i + ", ";
-        }
-    }
-    str = str.substring(0, str.length-2);
-    document.querySelector("#CurrentMerges").innerHTML = "Current Merges:\n"+str;
+    updateCurrentMergesTxt();
 }
 
 setInterval(() => {
