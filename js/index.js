@@ -30,10 +30,10 @@ function addBall(num) {
     for (const i in currentballs) {
         if (Object.hasOwnProperty.call(currentballs, i)) {
             const element = currentballs[i];
-            if (element > 0) str += i + ",";
+            if (element > 0) str += i + ", ";
         }
     }
-    str = str.substring(0, str.length-1);
+    str = str.substring(0, str.length-2);
     document.querySelector("#CurrentMerges").innerHTML = "Current Merges:\n"+str;
 }
 
