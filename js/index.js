@@ -4,6 +4,27 @@ let clicksleft = 10;
 let moneygain = 0;
 let currentballs = {};
 
+function LoadData() {
+    let data = dataHandler.getData();
+    currentballs = data.currentballs;
+    Studs = data.Studs;
+    clicksleft = data.clicksleft;
+    moneygain = data.moneygain;
+}
+
+function SaveData() {
+    let data = dataHandler.getData();
+    data.currentballs = currentballs;
+    data.Studs = Studs;
+    data.clicksleft = clicksleft;
+    data.moneygain = moneygain;
+    dataHandler.saveData(data);
+}
+
+LoadData();
+
+setInterval(SaveData, 30000)
+
 function addBall(num) {
     if (isNaN(Number(num))) return;
     if (isNaN(Number(currentballs[num]))) currentballs[num] = 0;
