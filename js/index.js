@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function toggleMute() {
-    var audio = document.getElementById("BGaudio");
+    let audio = document.getElementById("BGaudio");
     audio.muted = !audio.muted;
  }
 
