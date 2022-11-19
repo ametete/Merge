@@ -1,10 +1,13 @@
 let defaultData = {
-    currentballs: {}, // Current balls in-game
-    // Should this be added?
-    Studs: 0,
-    clicksleft: 10,
-    moneygain: 0,
-    // idk
+    currentBalls: {}, // Current Balls
+    Studs: 0, // Current Studs
+    clicksleft: 10, // Clicks left
+    moneygain: 0, // Money gain
+
+    settings: { // Settings for the game
+        BGaudioMuted: false, // If BG Music is muted
+    },
+
     date: new Date().getTime()/1000 // Date in seconds
 } // default data
 let currentData;

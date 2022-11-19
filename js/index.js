@@ -1,8 +1,11 @@
+let settings = {
+    BGaudioMuted: false,
+}
 
 let Studs = 0;
 let clicksleft = 10;
 let moneygain = 0;
-let currentballs = {};
+let currentBalls = {};
 
 let DOMLoaded = false;
 let DOMLoadedCallbacks = [];
@@ -21,9 +24,9 @@ function toggleMute() {
 
 function updateCurrentMergesTxt() {
     let str = "";
-    for (const i in currentballs) {
-        if (Object.hasOwnProperty.call(currentballs, i)) {
-            const element = currentballs[i];
+    for (const i in currentBalls) {
+        if (Object.hasOwnProperty.call(currentBalls, i)) {
+            const element = currentBalls[i];
             if (element > 0) str += i + ", ";
         }
     }
@@ -33,11 +36,12 @@ function updateCurrentMergesTxt() {
 
 function LoadData() {
     let data = dataHandler.getData();
-    currentballs = data.currentballs;
+    currentBalls = data.currentBalls;
     Studs = data.Studs;
     clicksleft = data.clicksleft;
     moneygain = data.moneygain;
-
+    settings = data.settings;
+    
     if (!DOMLoaded) DOMLoadedCallbacks.push(updateCurrentMergesTxt);
     else updateCurrentMergesTxt();
 }
@@ -46,10 +50,11 @@ function SaveData() {
     // document.querySelector("#Saving")
 
     let data = dataHandler.getData();
-    data.currentballs = currentballs;
+    data.currentBalls = currentBalls;
     data.Studs = Studs;
     data.clicksleft = clicksleft;
     data.moneygain = moneygain;
+    data.settings = settings;
     dataHandler.saveData(data);
 }
 
@@ -59,19 +64,19 @@ setInterval(SaveData, 600000);
 
 function addBall(num) {
     if (isNaN(Number(num))) return;
-    if (isNaN(Number(currentballs[num]))) currentballs[num] = 0;
+    if (isNaN(Number(currentBalls[num]))) currentBalls[num] = 0;
     
-    currentballs[num]++;
+    currentBalls[num]++;
 
-    if (currentballs[num] > 1) {
-        currentballs[num]--;
-        currentballs[num]--;
+    if (currentBalls[num] > 1) {
+        currentBalls[num]--;
+        currentBalls[num]--;
     
         addBall(num+1);
     } else {
         moneygain=0;
-        for (const elem in currentballs) {
-            if (Object.hasOwnProperty.call(currentballs, elem)) {
+        for (const elem in currentBalls) {
+            if (Object.hasOwnProperty.call(currentBalls, elem)) {
                 if (elem!=1&&elem!=0) {
                     moneygain+=2^(elem-1);
                 } else {
