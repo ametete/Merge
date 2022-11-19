@@ -26,10 +26,14 @@ function addBall(num) {
             }
         }
     }
-    str = "";
+    let str = "";
     for (const i in currentballs) {
-        str += i + ",";
+        if (Object.hasOwnProperty.call(currentballs, i)) {
+            const element = currentballs[i];
+            if (element > 0) str += i + ",";
+        }
     }
+    str = str.substring(0, str.length-1);
     document.querySelector("#CurrentMerges").innerHTML = "Current Merges:\n"+str;
 }
 
