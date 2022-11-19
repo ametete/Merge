@@ -1,7 +1,7 @@
 let debug = {
     enabled: false,
-    log: (...args) => {
+    log: (...data) => {
         if (!debug.enabled) return;
-        console.log(`[DEBUG] `, args);
+        console.log(...data);
     }
 }
