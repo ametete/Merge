@@ -26,13 +26,14 @@ function settingsChanged() {
 }
 
 window.addEventListener("message", event => {
-    if (event.channel === "settingsChanged") {
+    let data = event.data;
+    if (data.channel === "settingsChanged") {
         settingsChanged();
     }
 })
 
 function changeSetting(key, val) {
-    if (key && val) {
+    if (key !== null && val !== null) {
         settings[key] = val;
         postMessage({channel: "settingsChanged"});
     } else {
@@ -64,8 +65,11 @@ function LoadData() {
     moneygain = data.moneygain;
     settings = data.settings;
     
-    if (!DOMLoaded) DOMLoadedCallbacks.push(updateCurrentMergesTxt);
-    else updateCurrentMergesTxt();
+    if (!DOMLoaded) DOMLoadedCallbacks.push(updateCurrentMergesTxt, postMessage({channel: "settingsChanged"}));
+    else {
+        updateCurrentMergesTxt();
+        postMessage({channel: "settingsChanged"});
+    }
 }
 
 function SaveData() {
