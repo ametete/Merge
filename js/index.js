@@ -14,6 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 })
 
+function toggleMute() {
+    var audio = document.getElementById("BGaudio");
+    audio.muted = !audio.muted;
+ }
+
 function updateCurrentMergesTxt() {
     let str = "";
     for (const i in currentballs) {
