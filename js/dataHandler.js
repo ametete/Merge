@@ -47,10 +47,12 @@ let dataHandler = {
         else currentData = dataHandler.getData(); // validate happens on get
         currentData.date = new Date().getTime()/1000
         localStorage.setItem("data", JSON.stringify(currentData));
-        document.querySelector("#SavingText").style.opacity = 1; 
-        setTimeout (() => {
-            document.querySelector("#SavingText").style.opacity = 0; 
-        }, 2500);
+        try {
+            document.querySelector("#SavingText").style.opacity = 1; 
+            setTimeout (() => {
+                document.querySelector("#SavingText").style.opacity = 0; 
+            }, 2500);
+        } catch (error) {}
     },
     /**
      * 
