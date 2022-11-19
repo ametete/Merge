@@ -55,6 +55,7 @@ function SaveData() {
     data.clicksleft = clicksleft;
     data.moneygain = moneygain;
     data.settings = settings;
+
     dataHandler.saveData(data);
 }
 
@@ -90,8 +91,17 @@ function addBall(num) {
 
 setInterval(() => {
     Studs+=moneygain;
-    console.warn(moneygain);
-    document.querySelector("#Studs").innerHTML = "Studs: " + numberformat.formatShort(Studs, {sigfigs: 2});
+    debug.log(moneygain);
+    
+    // This is going to be an example of why I switched to this
+    // when you used sigfigs: 2 with something below 100k you can't get 1k or 10k etc and just get
+    // 1,000 and 10,000
+    // lets say the number is 12,952 it will display 13,000 same for 1k
+    // 1,952 will display as 2,000
+    let format = Studs > 100000 ? numberformat.formatShort(Studs, {sigfigs: 2}) : 
+                numberformat.formatShort(Studs, {sigfigs: 5})
+    // debug.log(Studs, numberformat.formatShort(Studs, {sigfigs: 2}));
+    document.querySelector("#Studs").innerHTML = "Studs: " + format;
 }, 1000);
 
 function merge_clicked(){
