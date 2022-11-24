@@ -44,9 +44,9 @@ h2 {
     right: 1%;
     margin: 5px;
     border: 3px solid;
-
-    height: 90%;
-    width: 300px;
+    
+    height: 80vh;
+    width: 20vw;
     /* Glow effect */
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
 }
@@ -82,3 +82,9 @@ h2 {
 h1 {
     font-family: Arial, Helvetica, sans-serif;
 }
+
+/* === RESPONSIVE CSS === */
+/* Small Screens */
+@media only screen and (max-width: 600px) {}
+/* Large Screens */
+@media only screen and (min-width: 600px) {}
