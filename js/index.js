@@ -19,9 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function settingsChanged() {
-    let audio = document.getElementById("BGaudio");
+    try {
+        setTimeout(() => {
+            let audio = document.getElementById("BGaudio");
+            audio.muted = settings.BGaudioMuted;
+        }, 100);
+    } catch (error) { console.warn("Failed to get BGaudio (Not loaded?)"); }
 
-    audio.muted = settings.BGaudioMuted;
     debug.enabled = settings.debugEnabled;
 }
 
@@ -160,6 +164,6 @@ function toggleUpgradeMenu() {
 
     menu.style["box-shadow"] = UpgradeMenuActive ? "0px 0px 10px 5px " + color : "0px 0px 0px 0px " + color;
 
-    menu.style["height"] = UpgradeMenuActive ? "90%" : "0";
+    menu.style["height"] = UpgradeMenuActive ? "80vh" : "0";
     // menu.style["width"] = UpgradeMenuActive ? "300px" : "0";
 };
