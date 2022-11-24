@@ -23,7 +23,7 @@ function settingsChanged() {
         setTimeout(() => {
             let audio = document.getElementById("BGaudio");
             audio.muted = settings.BGaudioMuted;
-        }, 100);
+        }, 0);
     } catch (error) { console.warn("Failed to get BGaudio (Not loaded?)"); }
 
     debug.enabled = settings.debugEnabled;
@@ -61,24 +61,26 @@ function updateCurrentMergesTxt() {
     document.querySelector("#CurrentMerges").innerHTML = "Current Merges:\n"+str;
 }
 
-function LoadData() {
-    let data = dataHandler.getData();
+let LoadData = (data, forceSave) => {
+    if (!data) data = dataHandler.getData();
     currentBalls = data.currentBalls;
     Studs = data.Studs;
     clicksleft = data.clicksleft;
     moneygain = data.moneygain;
     settings = data.settings;
     
+    if (forceSave) SaveData(false);
+
     if (!DOMLoaded) DOMLoadedCallbacks.push(updateCurrentMergesTxt, postMessage({channel: "settingsChanged"}));
     else {
         updateCurrentMergesTxt();
         postMessage({channel: "settingsChanged"});
     }
+    
+    return data;
 }
 
-function SaveData() {
-    // document.querySelector("#Saving")
-
+let SaveData = (saveMsg) => {
     let data = dataHandler.getData();
     data.currentBalls = currentBalls;
     data.Studs = Studs;
@@ -86,8 +88,11 @@ function SaveData() {
     data.moneygain = moneygain;
     data.settings = settings;
 
-    dataHandler.saveData(data);
+    return dataHandler.saveData(data, saveMsg);
 }
+
+dataHandler.Load = LoadData;
+dataHandler.Save = SaveData;
 
 LoadData();
 
