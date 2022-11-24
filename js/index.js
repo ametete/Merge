@@ -134,29 +134,33 @@ setInterval(() => {
     document.querySelector("#Studs").innerHTML = "Studs: " + format;
 }, 1000);
 
-function merge_clicked(){
+function merge_clicked() {
     clicksleft--
-    if (clicksleft==0)
-    {
+    if (clicksleft==0) {
         clicksleft=10;
-        document.querySelector("#MergeButton").innerHTML = "Click "+clicksleft+" more times";
         addBall(1);
-    }else{
-        document.querySelector("#MergeButton").innerHTML = "Click "+clicksleft+" more times";
-    };
-};
+    }
+    document.querySelector("#MergeButton").innerHTML = `Click ${clicksleft} more times`;
+}
 
 let UpgradeMenuActive = false;
 let SettingsActive = false;
 
 function toggleSettings() {
-    // let menu = document.querySelector("#Settings");
+    if (UpgradeMenuActive) toggleUpgradeMenu();
+
+    let menu = document.querySelector("#Settings");
+    let color = "rgba(255, 255, 255, 0.5)";
 
     SettingsActive = !SettingsActive;
 
+    menu.style["box-shadow"] = SettingsActive ? "0px 0px 10px 5px " + color : "0px 0px 0px 0px " + color;
+
+    menu.style["height"] = SettingsActive ? "80vh" : "0";
 }
 
 function toggleUpgradeMenu() {
+    if (SettingsActive) toggleSettings();
     let menu = document.querySelector("#Upgrades");
     let color = "rgba(255, 255, 255, 0.5)";
 
@@ -165,5 +169,4 @@ function toggleUpgradeMenu() {
     menu.style["box-shadow"] = UpgradeMenuActive ? "0px 0px 10px 5px " + color : "0px 0px 0px 0px " + color;
 
     menu.style["height"] = UpgradeMenuActive ? "80vh" : "0";
-    // menu.style["width"] = UpgradeMenuActive ? "300px" : "0";
-};
+}
