@@ -9,4 +9,5 @@
 - [x] Saving System
 - [ ] Offline earnings
 - [ ] Manual Saving
-- [ ] Save/Load Export/Import(?)
+- [x] Save/Load Export/Import functions
+- [ ] Save/Load Export/Import buttons
