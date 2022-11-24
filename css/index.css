@@ -23,6 +23,21 @@ h2 {
     margin: 5px;
 }
 
+#Settings {
+    display: flex;
+    background-color: #363b41;
+    border-radius: 0.25rem;
+    transition: 0.5s;
+    position: absolute;
+    right: 1%;
+    margin: 5px;
+    
+    height: 80vh;
+    width: 20vw;
+    /* Glow effect */
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+}
+
 #SettingsBtn {
     box-align: right;
     margin:5px;
@@ -33,22 +48,6 @@ h2 {
 #SettingsBtn:hover {
     /* color: gold; */
     text-shadow: 0 0 5px gold;
-}
-
-#Settings {
-    display: flex;
-    background-color: #363b41;
-    border-radius: 0.25rem;
-    transition: 0.5s;
-    position: absolute;
-    right: 1%;
-    margin: 5px;
-    border: 3px solid;
-    
-    height: 80vh;
-    width: 20vw;
-    /* Glow effect */
-    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
 }
 
 #UpgradesBtn {
@@ -71,8 +70,7 @@ h2 {
     position: absolute;
     right: 1%;
     margin: 5px;
-    border: 3px solid;
-    
+
     height: 80vh;
     width: 20vw;
     /* Glow effect */
@@ -85,6 +83,8 @@ h1 {
 
 /* === RESPONSIVE CSS === */
 /* Small Screens */
-@media only screen and (max-width: 600px) {}
+@media only screen and (max-width: 600px) {
+
+}
 /* Large Screens */
 @media only screen and (min-width: 600px) {}

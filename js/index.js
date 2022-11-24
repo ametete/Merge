@@ -153,25 +153,20 @@ let SettingsActive = false;
 
 function toggleSettings() {
     if (UpgradeMenuActive) toggleUpgradeMenu();
-
     let menu = document.querySelector("#Settings");
-    let color = "rgba(255, 255, 255, 0.5)";
 
     SettingsActive = !SettingsActive;
 
-    menu.style["box-shadow"] = SettingsActive ? "0px 0px 10px 5px " + color : "0px 0px 0px 0px " + color;
-
-    menu.style["height"] = SettingsActive ? "80vh" : "0";
+    menu.style["box-shadow"] = SettingsActive ? null : "none";
+    menu.style["height"] = SettingsActive ? null : "0";
 }
 
 function toggleUpgradeMenu() {
     if (SettingsActive) toggleSettings();
     let menu = document.querySelector("#Upgrades");
-    let color = "rgba(255, 255, 255, 0.5)";
 
     UpgradeMenuActive = !UpgradeMenuActive;
 
-    menu.style["box-shadow"] = UpgradeMenuActive ? "0px 0px 10px 5px " + color : "0px 0px 0px 0px " + color;
-
-    menu.style["height"] = UpgradeMenuActive ? "80vh" : "0";
+    menu.style["box-shadow"] = UpgradeMenuActive ? null : "none";
+    menu.style["height"] = UpgradeMenuActive ? null : "0";
 }
