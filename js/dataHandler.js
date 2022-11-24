@@ -25,16 +25,20 @@ async function getFile() {
 
             file = await handle[0].getFile();
         } else {
-            // TODO: Find out how to reject when prompt is closed
+            // TODO: Find out a better way to reject when canceling prompt
             file = await new Promise((res, rej) => {
-                let input = document.createElement('input');
-                input.type = 'file';
+                let input = document.createElement("input");
+                input.type = "file";
                 input.multiple = false;
                 input.accept = "application/json";
 
+                onfocus = () => {
+                    let found = (input.value.length)
+                    if (!found) rej("File Selection Canceled");
+                }
+
                 input.onchange = () => {
-                    let files = Array.from(input.files);
-                    res(files[0]);
+                    res(Array.from(input.files)[0]);
                 }
 
                 input.click();
@@ -46,7 +50,7 @@ async function getFile() {
         console.log(file);
 
         let reader = new FileReader();
-        reader.readAsText(file,'UTF-8');
+        reader.readAsText(file,"UTF-8");
         reader.onload = res => {
             resolve(res.target.result);
         }
@@ -133,17 +137,21 @@ let dataHandler = {
         return data;
     },
     import: async () => {
-        let content = await getFile();
-        if (content != null) {
-            try {
-                let data = JSON.parse(content);
-                if (data) {
-                    let loadData = dataHandler.validate(data);
-                    dataHandler.Load(loadData, true);
+        try {
+            let content = await getFile();
+            if (content != null) {
+                try {
+                    let data = JSON.parse(content);
+                    if (data) {
+                        let loadData = dataHandler.validate(data);
+                        dataHandler.Load(loadData, true);
+                    }
+                } catch (error) {
+                    console.warn(`Invailed JSON Data?\n${error}`);
                 }
-            } catch (error) {
-                console.warn(`Invailed JSON Data?\n${error}`);
             }
+        } catch (error) {
+            console.warn(`Failed to get file\n${error}`);
         }
     },
     export: async () => {
