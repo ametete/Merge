@@ -145,7 +145,8 @@ let dataHandler = {
         }
         return data;
     },
-    import: async () => {
+    // Import/Export stuff
+    Import: async () => {
         try {
             let content = await getFile();
             if (content != null) {
@@ -163,7 +164,7 @@ let dataHandler = {
             console.warn(`Failed to get file\n${error}`);
         }
     },
-    export: async () => {
+    Export: async () => {
         let json = JSON.stringify(dataHandler.Save(false), null, "\t");
         await saveAs(new Blob([json], {type: "text/json"}));
     }

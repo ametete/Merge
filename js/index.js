@@ -99,10 +99,8 @@ let LoadData = (data, forceSave) => {
         for (const key in settings) {
             if (Object.hasOwnProperty.call(settings, key)) {
                 const val = settings[key];
-                let btn = updateSettingButton(key, val)
-                if (btn) btn.onclick = () => {
-                    changeSetting(key, !settings[key])
-                }
+                let btn = updateSettingButton(key, val);
+                if (btn) btn.onclick = () => changeSetting(key, !settings[key]);
             }
         }
     }
@@ -166,7 +164,7 @@ function addBall(num) {
 }
 
 setInterval(() => {
-    Studs+=moneygain;
+    Studs += moneygain;
     debug.log(moneygain);
 
     // This is going to be an example of why I switched to this
@@ -175,7 +173,7 @@ setInterval(() => {
     // lets say the number is 12,952 it will display 13,000 same for 1k
     // 1,952 will display as 2,000
     let format = Studs > 100000 ? numberformat.formatShort(Studs, {sigfigs: 2}) : 
-                numberformat.formatShort(Studs, {sigfigs: 5})
+                numberformat.formatShort(Studs, {sigfigs: 5});
     // debug.log(Studs, numberformat.formatShort(Studs, {sigfigs: 2}));
     document.querySelector("#Studs").innerHTML = `Studs: ${format}`;
 }, 1000);
@@ -222,8 +220,8 @@ function updatePage(num) {
     let nextPage = Number(num);
 
     if (isNaN(nextPage)) {
-        if (num == "back") nextPage = currentPage-1
-        else nextPage = currentPage+1
+        if (num == "back") nextPage = currentPage-1;
+        else nextPage = currentPage+1;
     }
 
     if (nextPage < 0) nextPage = pages.length-1;
