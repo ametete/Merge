@@ -83,6 +83,14 @@ let LoadData = (data, forceSave) => {
     clicksleft = data.clicksleft;
     moneygain = data.moneygain;
     settings = data.settings;
+
+    let cdate = new Date().getTime()/1000;
+    let date = data.date;
+
+    if (cdate >= (date-86400)) {
+        //TODO: Add offline earnings here
+        forceSave = true; // Force save as we added stuff that should be saved just incase
+    }
     
     if (forceSave) SaveData(false);
 
