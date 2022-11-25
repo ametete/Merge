@@ -24,8 +24,12 @@ h2 {
 }
 
 #Settings {
+    overflow-y: scroll;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background-color: #363b41;
     border-radius: 0.25rem;
     transition: 0.5s;
@@ -37,6 +41,11 @@ h2 {
     width: 20vw;
     /* Glow effect */
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#Settings::-webkit-scrollbar {
+    display: none;
 }
 
 #SettingsBtn {
@@ -53,7 +62,7 @@ h2 {
 
 .settingBtn {
     height: 8vh;
-    width: 100%;
+    width: auto;
     margin: 0.5rem;
     overflow: visible;
 }
@@ -74,7 +83,12 @@ h2 {
 }
 
 #Upgrades {
+    overflow-y: scroll;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
     display: flex;
+    flex-direction: column;
     background-color: #363b41;
     border-radius: 0.25rem;
     transition: 0.5s;
@@ -86,6 +100,10 @@ h2 {
     width: 20vw;
     /* Glow effect */
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+}
+
+#Upgrades::-webkit-scrollbar {
+    display: none;
 }
 
 h1 {
