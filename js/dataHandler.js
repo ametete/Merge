@@ -137,6 +137,12 @@ let dataHandler = {
                 data[elem] = defaultData[elem];
             }
         }
+        for (const elem in defaultData.settings) {
+            if (Object.hasOwnProperty.call(defaultData.settings, elem)) {
+                if (data.settings[elem]) continue;
+                data.settings[elem] = defaultData.settings[elem];
+            }
+        }
         return data;
     },
     import: async () => {
