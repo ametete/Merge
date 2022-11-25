@@ -29,8 +29,15 @@ h2 {
     position: absolute;
     bottom: 0;
     left: 50%;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    
+    margin-bottom: 30px;
+
+    /* text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); */
     transition: opacity 0.5s;
+
+    /* Text/Font stuff */
+    font-weight: bolder;
+    font-size: x-large;
 }
 
 #Studs {
@@ -46,6 +53,7 @@ h2 {
     scrollbar-width: none;  /* Firefox */
     display: flex;
     flex-direction: column;
+    align-items: center;
     background-color: #363b41;
     border-radius: 0.25rem;
     transition: 0.5s;
@@ -82,23 +90,42 @@ h2 {
     margin: 0.5rem;
     overflow: visible;
 }
+
 .settingBtn:hover {
     text-shadow: 0 0 5px gold;
 }
 
-#UpgradesBtn {
-    box-align: right;
-    margin:5px;
-
-    transition: 0.2s;
+#Settings h3 {
+    margin: 0;
 }
 
-#UpgradesBtn:hover {
-    /* color: gold; */
-    text-shadow: 0 0 5px gold;
+#Settings .content {
+    background-color: #000;
+    
+    display: flex;
+    
+    justify-content: center;
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#Settings .content[data-dir="row"] {
+    flex-direction: row;
+}
+
+#Settings .content[data-dir="column"] {
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+#Settings .content::-webkit-scrollbar {
+    display: none;
 }
 
 #Upgrades {
+    overflow: none;
     overflow-y: scroll;
     /* Hide scrollbar for IE, Edge and Firefox */
     -ms-overflow-style: none;  /* IE and Edge */
@@ -120,6 +147,18 @@ h2 {
 
 #Upgrades::-webkit-scrollbar {
     display: none;
+}
+
+#UpgradesBtn {
+    box-align: right;
+    margin:5px;
+
+    transition: 0.2s;
+}
+
+#UpgradesBtn:hover {
+    /* color: gold; */
+    text-shadow: 0 0 5px gold;
 }
 
 #Upgrades hr, #Settings hr {
@@ -144,7 +183,7 @@ footer {
     font-weight: bolder;
     font-size: small;
 
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    /* text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); */
 }
 
 footer strong {

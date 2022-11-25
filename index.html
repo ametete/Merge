@@ -31,19 +31,30 @@
         <hr style="border-color: white">
         <div style="height: 0; box-shadow: none;" id="Settings">
             <!--TEMP-->
-            <button class="settingBtn" onclick="dataHandler.Import()">Import Data</button>
-            <button class="settingBtn" onclick="dataHandler.Export()">Export Data</button>
             <hr>
-            <button class="settingBtn" onclick="dataHandler.Save()">Save Data</button>
-            <button class="settingBtn" onclick="dataHandler.Load()">Load Data</button>
+            <h3>Import/Export Data</h3>
+            <div class="content" data-dir="row">
+                <button class="settingBtn" onclick="dataHandler.Import()">Import Data</button>
+                <button class="settingBtn" onclick="dataHandler.Export()">Export Data</button>
+            </div>
+            <hr>
+            <h3>Save/Load Data</h3>
+            <div class="content" data-dir="row">
+                <button class="settingBtn" onclick="dataHandler.Save()">Save Data</button>
+                <button class="settingBtn" onclick="dataHandler.Load()">Load Data</button>
+            </div>
+            <hr>
             <!--TEMP-->
+            <div class="content" data-dir="column">
+                <button class="settingBtn" data-setting="MuteBGAudio"><label>Mute Background Audio:</label> <a>???</a></button>
+                <button class="settingBtn" data-setting="debugEnabled"><label>Debug Enabled:</label> <a>???</a></button>
+            </div>
             <hr>
-            <button class="settingBtn" data-setting="MuteBGAudio"><label>Mute Background Audio:</label> <a>???</a></button>
         </div>
         <div style="height: 0; box-shadow: none;" id="Upgrades" data-page="0">
             <div id="topbar">
                 <button onclick="updatePage('back')" id="pageBtn"><</button>
-                <div id="content">
+                <div class="content">
                     <!-- <button onclick="updatePage(0)" data-page="0">Testing</button> -->
                 </div>
                 <button onclick="updatePage('next')" id="pageBtn">></button>
