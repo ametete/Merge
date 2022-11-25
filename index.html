@@ -28,7 +28,13 @@
         </div>
         
         <hr style="border-color: white">
-        <div style="height: 0; box-shadow: none;" data-showItems="false" id="Settings" data-page="0">
+        <div style="height: 0; box-shadow: none;" id="Settings">
+            <!--TEMP-->
+            <button class="settingBtn" onclick="dataHandler.import()">Import Data</button>
+            <button class="settingBtn" onclick="dataHandler.export()">Export Data</button>
+            <button class="settingBtn" onclick="dataHandler.Save()">Save Data</button>
+            <button class="settingBtn" onclick="dataHandler.Load()">Load Data</button>
+            <!--TEMP-->
             <button class="settingBtn" data-setting="MuteBGAudio"><label>Mute Background Audio:</label> <a>???</a></button>
         </div>
         <div style="height: 0; box-shadow: none;" id="Upgrades" data-page="0">
@@ -36,7 +42,6 @@
         
         <h2 id="CurrentMerges">Current Merges:</h2>
         <button onclick="merge_clicked()" id="MergeButton" >Click 10 more times</button>
-        <button onclick="toggleMute()">i hate this i hate this</button>
         <h2 style="text-align: center; opacity: 0;" id="SavingText">Saving...</h2>
     </body>
 </html>
