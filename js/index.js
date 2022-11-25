@@ -118,7 +118,7 @@ let LoadData = (data, forceSave) => {
     return data;
 }
 
-let SaveData = (saveMsg) => {
+let SaveData = (saveMsg = true) => {
     let data = dataHandler.getData();
 
     data.currentBalls = currentBalls;
