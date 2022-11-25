@@ -1,5 +1,5 @@
 let settings = {
-    BGaudioMuted: false,
+    MuteBGAudio: false,
     debugEnabled: false
 }
 
@@ -14,15 +14,25 @@ let DOMLoadedCallbacks = [];
 document.addEventListener("DOMContentLoaded", () => {
     DOMLoaded = true;
     DOMLoadedCallbacks.forEach((func) => {
-        if (typeof(func) === "function") func();
+        try {
+            if (typeof(func) === "function") func();
+        } catch (error) { console.error(error); } 
     })
 })
+
+function updateSettingButton(key, val) {
+    try {
+        let btn = document.querySelector(`button[data-setting="${key}"] a`);
+        if (!btn) return console.warn(`Failed to get setting button ${key}`);
+        btn.innerHTML = val;
+    } catch (error) { console.error(error); }
+}
 
 function settingsChanged() {
     try {
         setTimeout(() => {
             let audio = document.getElementById("BGaudio");
-            audio.muted = settings.BGaudioMuted;
+            audio.muted = settings.MuteBGAudio;
         }, 0);
     } catch (error) { console.warn("Failed to get BGaudio (Not loaded?)"); }
 
@@ -38,6 +48,7 @@ window.addEventListener("message", event => {
 
 function changeSetting(key, val) {
     if (key !== null && val !== null) {
+        updateSettingButton(key, val);
         settings[key] = val;
         postMessage({channel: "settingsChanged"});
     } else {
@@ -46,23 +57,26 @@ function changeSetting(key, val) {
 }
 
 function toggleMute() {
-    changeSetting("BGaudioMuted", !settings.BGaudioMuted);
+    changeSetting("MuteBGAudio", !settings.MuteBGAudio);
  }
 
 function updateCurrentMergesTxt() {
     let str = "";
+
     for (const i in currentBalls) {
         if (Object.hasOwnProperty.call(currentBalls, i)) {
             const element = currentBalls[i];
-            if (element > 0) str += i + ", ";
+            if (element > 0) str += `${i}, `;
         }
     }
+
     str = str.substring(0, str.length-2);
-    document.querySelector("#CurrentMerges").innerHTML = "Current Merges:\n"+str;
+    document.querySelector("#CurrentMerges").innerHTML = `Current Merges:\n${str}`;
 }
 
 let LoadData = (data, forceSave) => {
     if (!data) data = dataHandler.getData();
+
     currentBalls = data.currentBalls;
     Studs = data.Studs;
     clicksleft = data.clicksleft;
@@ -71,8 +85,19 @@ let LoadData = (data, forceSave) => {
     
     if (forceSave) SaveData(false);
 
-    if (!DOMLoaded) DOMLoadedCallbacks.push(updateCurrentMergesTxt, postMessage({channel: "settingsChanged"}));
-    else {
+    let setupSettings = () => {
+        for (const key in settings) {
+            if (Object.hasOwnProperty.call(settings, key)) {
+                const val = settings[key];
+                updateSettingButton(key, val);
+            }
+        }
+    }
+
+    if (!DOMLoaded) {
+        DOMLoadedCallbacks.push(setupSettings, updateCurrentMergesTxt, postMessage({channel: "settingsChanged"}));
+    } else {
+        setupSettings();
         updateCurrentMergesTxt();
         postMessage({channel: "settingsChanged"});
     }
@@ -82,6 +107,7 @@ let LoadData = (data, forceSave) => {
 
 let SaveData = (saveMsg) => {
     let data = dataHandler.getData();
+
     data.currentBalls = currentBalls;
     data.Studs = Studs;
     data.clicksleft = clicksleft;
@@ -111,16 +137,18 @@ function addBall(num) {
         addBall(num+1);
     } else {
         moneygain=0;
+
         for (const elem in currentBalls) {
             if (Object.hasOwnProperty.call(currentBalls, elem)) {
                 if (elem!=1&&elem!=0) {
                     moneygain+=2^(elem-1);
                 } else {
-                    moneygain+=1 ;
+                    moneygain+=1;
                 }
             }
         }
     }
+
     updateCurrentMergesTxt();
 }
 
@@ -136,15 +164,17 @@ setInterval(() => {
     let format = Studs > 100000 ? numberformat.formatShort(Studs, {sigfigs: 2}) : 
                 numberformat.formatShort(Studs, {sigfigs: 5})
     // debug.log(Studs, numberformat.formatShort(Studs, {sigfigs: 2}));
-    document.querySelector("#Studs").innerHTML = "Studs: " + format;
+    document.querySelector("#Studs").innerHTML = `Studs: ${format}`;
 }, 1000);
 
 function merge_clicked() {
-    clicksleft--
+    clicksleft--;
+
     if (clicksleft==0) {
-        clicksleft=10;
+        clicksleft = 10;
         addBall(1);
     }
+    
     document.querySelector("#MergeButton").innerHTML = `Click ${clicksleft} more times`;
 }
 
