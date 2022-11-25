@@ -6,7 +6,9 @@ let defaultData = {
 
     settings: { // Settings for the game
         MuteBGAudio: false, // If BG Music is muted
-        debugEnabled: false // If debug mode is enableds
+        debugEnabled: false, // If debug mode is enableds
+        Theme: "dark", // If custom then it will use the css that is in settings
+        StyleSource: "", // Custom CSS
     },
 
     date: new Date().getTime()/1000 // Date in seconds
