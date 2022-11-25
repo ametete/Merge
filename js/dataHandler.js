@@ -5,7 +5,8 @@ let defaultData = {
     moneygain: 0, // Money gain
 
     settings: { // Settings for the game
-        BGaudioMuted: false, // If BG Music is muted
+        MuteBGAudio: false, // If BG Music is muted
+        debugEnabled: false // If debug mode is enableds
     },
 
     date: new Date().getTime()/1000 // Date in seconds
