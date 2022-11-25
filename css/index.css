@@ -3,6 +3,19 @@ h2 {
     box-align: left; 
 }
 
+#topbar {
+    background-color: #000;
+    margin: 0.25rem;
+    padding: 0.35rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+#topbar #pageBtn {
+    height: 2rem;
+    width: 1.5rem;
+}
+
 #MergeButton{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
@@ -109,7 +122,7 @@ h1 {
 /* === RESPONSIVE CSS === */
 /* Small Screens */
 @media only screen and (max-width: 600px) {
-
+    
 }
 /* Large Screens */
 @media only screen and (min-width: 600px) {
