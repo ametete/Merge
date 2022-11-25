@@ -40,17 +40,17 @@
         </div>
         <div style="height: 0; box-shadow: none;" id="Upgrades" data-page="0">
             <div id="topbar">
-                <button id="pageBtn"><</button>
+                <button onclick="updatePage('back')" id="pageBtn"><</button>
                 <div id="content">
-                    <button data-page="0">Testing</button>
+                    <!-- <button onclick="updatePage(0)" data-page="0">Testing</button> -->
                 </div>
-                <button id="pageBtn">></button>
+                <button onclick="updatePage('next')" id="pageBtn">></button>
             </div>
-            <div class="page-content" data-page="0">
-                <a>This is the page content</a>
+            <div style="display: none;" class="pageContent" data-page="0">
+                <a>This is the page content 0</a>
             </div>
-            <div style="display: none;" class="page-content" data-page="1">
-                <a>This is the page content</a>
+            <div style="display: none;" class="pageContent" data-page="1">
+                <a>This is the page content 1</a>
             </div>
         </div>
         

@@ -13,6 +13,7 @@ let DOMLoadedCallbacks = [];
 
 document.addEventListener("DOMContentLoaded", () => {
     DOMLoaded = true;
+    updatePage(0);
     DOMLoadedCallbacks.forEach((func) => {
         try {
             if (typeof(func) === "function") func();
@@ -211,4 +212,27 @@ function toggleUpgradeMenu() {
 
     menu.style["box-shadow"] = UpgradeMenuActive ? null : "none";
     menu.style["height"] = UpgradeMenuActive ? null : "0";
+}
+
+function updatePage(num) {
+    let menu = document.querySelector("#Upgrades");
+    let pages = document.querySelectorAll("#Upgrades .pageContent");
+
+    let currentPage = Number(menu.getAttribute("data-page"));
+    let nextPage = Number(num);
+
+    if (isNaN(nextPage)) {
+        if (num == "back") nextPage = currentPage-1
+        else nextPage = currentPage+1
+    }
+
+    if (nextPage < 0) nextPage = pages.length-1;
+    else if (nextPage > pages.length-1) nextPage = 0;
+
+    menu.setAttribute("data-page", nextPage);
+
+    pages.forEach((elem) => {
+        if (elem.getAttribute("data-page") == nextPage) elem.style.display = "";
+        else elem.style.display = "none";
+    })
 }

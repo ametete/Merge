@@ -4,7 +4,6 @@ h2 {
 }
 
 #topbar {
-    background-color: #000;
     margin: 0.25rem;
     padding: 0.35rem;
     display: flex;
@@ -113,6 +112,11 @@ h2 {
 
 #Upgrades::-webkit-scrollbar {
     display: none;
+}
+
+#Upgrades .pageContent {
+    margin: 0.25rem;
+    padding: 0.35rem;
 }
 
 h1 {
