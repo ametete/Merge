@@ -25,6 +25,7 @@ h2 {
 
 #Settings {
     display: flex;
+    flex-direction: row;
     background-color: #363b41;
     border-radius: 0.25rem;
     transition: 0.5s;
@@ -47,6 +48,16 @@ h2 {
 
 #SettingsBtn:hover {
     /* color: gold; */
+    text-shadow: 0 0 5px gold;
+}
+
+.settingBtn {
+    height: 8vh;
+    width: 100%;
+    margin: 0.5rem;
+    overflow: visible;
+}
+.settingBtn:hover {
     text-shadow: 0 0 5px gold;
 }
 
@@ -87,4 +98,6 @@ h1 {
 
 }
 /* Large Screens */
-@media only screen and (min-width: 600px) {}
+@media only screen and (min-width: 600px) {
+
+}
