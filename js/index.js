@@ -21,11 +21,16 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function updateSettingButton(key, val) {
+    let btn;
+
     try {
-        let btn = document.querySelector(`button[data-setting="${key}"] a`);
+        btn = document.querySelector(`button[data-setting="${key}"] a`);
         if (!btn) return console.warn(`Failed to get setting button ${key}`);
         btn.innerHTML = val;
     } catch (error) { console.error(error); }
+
+    if (btn) return document.querySelector(`button[data-setting="${key}"]`);
+    return null;
 }
 
 function settingsChanged() {
@@ -56,10 +61,6 @@ function changeSetting(key, val) {
     }
 }
 
-function toggleMute() {
-    changeSetting("MuteBGAudio", !settings.MuteBGAudio);
- }
-
 function updateCurrentMergesTxt() {
     let str = "";
 
@@ -89,7 +90,10 @@ let LoadData = (data, forceSave) => {
         for (const key in settings) {
             if (Object.hasOwnProperty.call(settings, key)) {
                 const val = settings[key];
-                updateSettingButton(key, val);
+                let btn = updateSettingButton(key, val)
+                if (btn) btn.onclick = () => {
+                    changeSetting(key, !settings[key])
+                }
             }
         }
     }
