@@ -148,7 +148,7 @@ h2 {
 
 footer {
     display: flex;
-    
+
     justify-content: center;
     align-items: center;
     flex-direction: row;
@@ -170,6 +170,11 @@ footer {
 
 footer strong {
     margin-right: 10px;
+}
+
+footer #devTxt {
+    display: unset;
+    color: red;
 }
 
 /* === RESPONSIVE CSS === */
