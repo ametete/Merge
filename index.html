@@ -5,8 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Random Merge Clicker</title>
         <link rel="stylesheet" href="./css/index.css">
-        <script src="./js/debug.js"></script>
+        <link rel="stylesheet" href="./themes/dark.theme.css">
+        <!--External scripts-->
         <script src="https://cdn.rawgit.com/erosson/swarm-numberformat/v0.1.0/dist/swarm-numberformat.min.js"></script>
+        <!--Internal scripts-->
+        <script src="./js/debug.js"></script>
         <script src="./js/dataHandler.js"></script>
         <script src="./js/index.js"></script>
     </head>
@@ -19,16 +22,67 @@
         </audio>
         <div style="display: flex; flex-direction: row; justify-content: space-between;">
             <h1 id="Studs">Studs: 0</h1>
-            <h1 onclick="toggleUpgradeMenu()" id="UpgradesBtn">Upgrades</h1>
+            <!-- TODO: Fix Upgrades/Settings not being shown correctly based on screen size -->
+            <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                <h1 onclick="toggleSettings()" id="SettingsBtn">Settings</h1>
+                <h1 onclick="toggleUpgradeMenu()" id="UpgradesBtn">Upgrades</h1>
+            </div>
         </div>
         
-        <hr style="border-color: white">
-        <div style="border: 0 solid; height: 0; box-shadow: 0px 0px 0px 0px;" id="Upgrades" data-page="0">
+        <hr>
+        <!--
+            TODO: Add an prompt to Import and Load (if we keep load)
+            This prompt should say something like this:
+            `Are you sure you want to Import/Load data
+                You will lose you're current progress
+                Yes/No`
+            ofc Yes and No will be centered and space between
+            but this is just an example so
+        -->
+        <!-- TODO: Add support for the "Theme" system as this can use custom css -->
+        <!-- TODO: Find out how to do custom css (tbh this might be too hard for me rn Lol) -->
+        <div style="height: 0; box-shadow: none;" id="Settings">
+            <hr>
+            <h3>Import/Export Data</h3>
+            <div class="content" data-dir="row">
+                <button class="settingBtn" onclick="dataHandler.Import()">Import Data</button>
+                <button class="settingBtn" onclick="dataHandler.Export()">Export Data</button>
+            </div>
+            <hr>
+            <h3>Save/Load Data</h3>
+            <div class="content" data-dir="row">
+                <button class="settingBtn" onclick="dataHandler.Save()">Save Data</button>
+                <button class="settingBtn" onclick="dataHandler.Load()">Load Data</button>
+            </div>
+            <hr>
+            <div class="content" data-dir="column">
+                <button class="settingBtn" data-setting="MuteBGAudio"><label>Mute Background Audio:</label> <a>???</a></button>
+                <button class="settingBtn" data-setting="debugEnabled"><label>Debug Enabled:</label> <a>???</a></button>
+            </div>
+            <hr>
+        </div>
+        <!-- TODO: Auto generate page(s), Auto generate topbar btns -->
+        <div style="height: 0; box-shadow: none;" id="Upgrades" data-page="0">
+            <div id="topbar">
+                <button onclick="updatePage('back')" id="pageBtn"><</button>
+                <div class="content">
+                    <!-- <button onclick="updatePage(0)" data-page="0">Testing</button> -->
+                </div>
+                <button onclick="updatePage('next')" id="pageBtn">></button>
+            </div>
+            <hr>
+            <!-- <div style="display: none;" class="pageContent" data-page="0">
+            </div>
+            <div style="display: none;" class="pageContent" data-page="1">
+            </div> -->
         </div>
         
         <h2 id="CurrentMerges">Current Merges:</h2>
         <button onclick="merge_clicked()" id="MergeButton" >Click 10 more times</button>
-        <button onclick="toggleMute()">i hate this i hate this</button>
-        <h2 style="text-align: center; opacity: 0;" id="SavingText">Saving...</h2>
+        <h2 style="opacity: 0;" id="SavingText">Saving...</h2>
+        <footer>
+            <!-- TODO: fetch Current Version via file/github? -->
+            <strong>Version: 0.0.1 <strong id="devTxt">DEVELOPMENT BUILD</strong></strong>
+        </footer>
     </body>
 </html>

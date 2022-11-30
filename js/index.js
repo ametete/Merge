@@ -1,6 +1,18 @@
+// TODO: Fix Stud number format (sometimes it doesn't work correctly)
+// TODO: Add an toggle for number format stuff
+//       (I forgot what it's called but the script we use supports this)
+
+// TODO: Make an "Custom CSS Editor" or find an open sourced one that works
+//       (aka allows us to use it in anything we want)
+
 let settings = {
-    BGaudioMuted: false,
+    MuteBGAudio: false,
     debugEnabled: false
+}
+
+let upgrades = {
+    unknown1: 0,
+    unknown2: 0,
 }
 
 let Studs = 0;
@@ -13,15 +25,37 @@ let DOMLoadedCallbacks = [];
 
 document.addEventListener("DOMContentLoaded", () => {
     DOMLoaded = true;
+    updatePage(0);
     DOMLoadedCallbacks.forEach((func) => {
-        if (typeof(func) === "function") func();
+        try {
+            if (typeof(func) === "function") func();
+        } catch (error) { console.error(error); } 
     })
 })
 
-function settingsChanged() {
-    let audio = document.getElementById("BGaudio");
+// TODO: Switch function to updateSettingPage or something
+//       This way I can just do everything in it like styles and all that
+function updateSettingButton(key, val) {
+    let btn;
 
-    audio.muted = settings.BGaudioMuted;
+    try {
+        btn = document.querySelector(`button[data-setting="${key}"] a`);
+        if (!btn) return console.warn(`Failed to get setting button ${key}`);
+        btn.innerHTML = val;
+    } catch (error) { console.error(error); }
+
+    if (btn) return document.querySelector(`button[data-setting="${key}"]`);
+    return null;
+}
+
+function settingsChanged() {
+    try {
+        setTimeout(() => {
+            let audio = document.getElementById("BGaudio");
+            audio.muted = settings.MuteBGAudio;
+        }, 0);
+    } catch (error) { console.warn("Failed to get BGaudio (Not loaded?)"); }
+
     debug.enabled = settings.debugEnabled;
 }
 
@@ -34,6 +68,7 @@ window.addEventListener("message", event => {
 
 function changeSetting(key, val) {
     if (key !== null && val !== null) {
+        updateSettingButton(key, val);
         settings[key] = val;
         postMessage({channel: "settingsChanged"});
     } else {
@@ -41,49 +76,77 @@ function changeSetting(key, val) {
     }
 }
 
-function toggleMute() {
-    changeSetting("BGaudioMuted", !settings.BGaudioMuted);
- }
-
 function updateCurrentMergesTxt() {
     let str = "";
+
     for (const i in currentBalls) {
         if (Object.hasOwnProperty.call(currentBalls, i)) {
             const element = currentBalls[i];
-            if (element > 0) str += i + ", ";
+            if (element > 0) str += `${i}, `;
         }
     }
+
     str = str.substring(0, str.length-2);
-    document.querySelector("#CurrentMerges").innerHTML = "Current Merges:\n"+str;
+    document.querySelector("#CurrentMerges").innerHTML = `Current Merges:\n${str}`;
 }
 
-function LoadData() {
-    let data = dataHandler.getData();
+let LoadData = (data, forceSave) => {
+    if (!data) data = dataHandler.getData();
+
     currentBalls = data.currentBalls;
     Studs = data.Studs;
     clicksleft = data.clicksleft;
     moneygain = data.moneygain;
     settings = data.settings;
+    upgrades = data.upgrades;
+
+    let cdate = new Date().getTime()/1000;
+    let date = data.date;
+
+    if (cdate >= (date-86400)) {
+        //TODO: Add offline earnings here
+        forceSave = true; // Force save as we added stuff that should be saved just incase
+    }
     
-    if (!DOMLoaded) DOMLoadedCallbacks.push(updateCurrentMergesTxt, postMessage({channel: "settingsChanged"}));
-    else {
+    if (forceSave) SaveData(false);
+
+    let setupSettings = () => {
+        for (const key in settings) {
+            // TODO: Make a setup function for other types instead of just bools (maybe custom callback?)
+            if (Object.hasOwnProperty.call(settings, key)) {
+                const val = settings[key];
+                let btn = updateSettingButton(key, val);
+                if (btn) btn.onclick = () => changeSetting(key, !settings[key]);
+            }
+        }
+    }
+
+    if (!DOMLoaded) {
+        DOMLoadedCallbacks.push(setupSettings, updateCurrentMergesTxt, postMessage({channel: "settingsChanged"}));
+    } else {
+        setupSettings();
         updateCurrentMergesTxt();
         postMessage({channel: "settingsChanged"});
     }
+    
+    return data;
 }
 
-function SaveData() {
-    // document.querySelector("#Saving")
-
+let SaveData = (saveMsg = true) => {
     let data = dataHandler.getData();
+
     data.currentBalls = currentBalls;
     data.Studs = Studs;
     data.clicksleft = clicksleft;
     data.moneygain = moneygain;
     data.settings = settings;
+    data.upgrades = upgrades;
 
-    dataHandler.saveData(data);
+    return dataHandler.saveData(data, saveMsg);
 }
+
+dataHandler.Load = LoadData;
+dataHandler.Save = SaveData;
 
 LoadData();
 
@@ -102,21 +165,23 @@ function addBall(num) {
         addBall(num+1);
     } else {
         moneygain=0;
+
         for (const elem in currentBalls) {
             if (Object.hasOwnProperty.call(currentBalls, elem)) {
                 if (elem!=1&&elem!=0) {
                     moneygain+=2^(elem-1);
                 } else {
-                    moneygain+=1 ;
+                    moneygain+=1;
                 }
             }
         }
     }
+
     updateCurrentMergesTxt();
 }
 
 setInterval(() => {
-    Studs+=moneygain;
+    Studs += moneygain;
     debug.log(moneygain);
 
     // This is going to be an example of why I switched to this
@@ -125,33 +190,66 @@ setInterval(() => {
     // lets say the number is 12,952 it will display 13,000 same for 1k
     // 1,952 will display as 2,000
     let format = Studs > 100000 ? numberformat.formatShort(Studs, {sigfigs: 2}) : 
-                numberformat.formatShort(Studs, {sigfigs: 5})
+                numberformat.formatShort(Studs, {sigfigs: 5});
     // debug.log(Studs, numberformat.formatShort(Studs, {sigfigs: 2}));
-    document.querySelector("#Studs").innerHTML = "Studs: " + format;
+    document.querySelector("#Studs").innerHTML = `Studs: ${format}`;
 }, 1000);
 
-function merge_clicked(){
-    clicksleft--
-    if (clicksleft==0)
-    {
-        clicksleft=10;
-        document.querySelector("#MergeButton").innerHTML = "Click "+clicksleft+" more times";
+function merge_clicked() {
+    clicksleft--;
+
+    if (clicksleft==0) {
+        clicksleft = 10;
         addBall(1);
-    }else{
-        document.querySelector("#MergeButton").innerHTML = "Click "+clicksleft+" more times";
-    };
-};
+    }
+    
+    document.querySelector("#MergeButton").innerHTML = `Click ${clicksleft} more times`;
+}
 
 let UpgradeMenuActive = false;
+let SettingsActive = false;
+
+function toggleSettings() {
+    if (UpgradeMenuActive) toggleUpgradeMenu();
+    let menu = document.querySelector("#Settings");
+
+    SettingsActive = !SettingsActive;
+
+    menu.style["box-shadow"] = SettingsActive ? null : "none";
+    menu.style["height"] = SettingsActive ? null : "0";
+}
 
 function toggleUpgradeMenu() {
+    if (SettingsActive) toggleSettings();
     let menu = document.querySelector("#Upgrades");
-    let color = "rgba(255, 255, 255, 0.5)";
 
     UpgradeMenuActive = !UpgradeMenuActive;
 
-    menu.style["box-shadow"] = UpgradeMenuActive ? "0px 0px 10px 5px " + color : "0px 0px 0px 0px " + color;
+    menu.style["box-shadow"] = UpgradeMenuActive ? null : "none";
+    menu.style["height"] = UpgradeMenuActive ? null : "0";
+}
 
-    menu.style["height"] = UpgradeMenuActive ? "90%" : "0";
-    // menu.style["width"] = UpgradeMenuActive ? "300px" : "0";
-};
+function updatePage(num) {
+    let menu = document.querySelector("#Upgrades");
+    let pages = document.querySelectorAll("#Upgrades .pageContent");
+
+    if (pages.length == 0) return;
+
+    let currentPage = Number(menu.getAttribute("data-page"));
+    let nextPage = Number(num);
+
+    if (isNaN(nextPage)) {
+        if (num == "back") nextPage = currentPage-1;
+        else nextPage = currentPage+1;
+    }
+
+    if (nextPage < 0) nextPage = pages.length-1;
+    else if (nextPage > pages.length-1) nextPage = 0;
+
+    menu.setAttribute("data-page", nextPage);
+
+    pages.forEach((elem) => {
+        if (elem.getAttribute("data-page") == nextPage) elem.style.display = "";
+        else elem.style.display = "none";
+    })
+}
