@@ -13,12 +13,24 @@ h2 {
 #topbar {
     margin: 0.25rem;
     padding: 0.35rem;
+
+    width: 90%;
+
     display: flex;
     justify-content: space-between;
 }
 
+#topbar .content {
+    padding: 0.25rem;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+}
+
 #topbar #pageBtn {
-    height: 2rem;
+    margin: 0.15rem;
+    height: 1.5rem;
     width: 1.5rem;
 }
 
@@ -138,7 +150,7 @@ h2 {
 }
 
 #Upgrades hr, #Settings hr {
-    width: 90%;
+    width: 90vw;
 }
 
 #Upgrades .pageContent {
@@ -184,8 +196,13 @@ footer #devTxt {
         height: 70vh;
         width: 70vw;
     }
+
+    #topbar .content {
+        display: none;
+    }
 }
 /* Large Screens */
-@media only screen and (min-width: 600px) {
+/* Not required yet */
+/* @media only screen and (min-width: 600px) {
 
-}
+} */
