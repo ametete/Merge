@@ -112,6 +112,7 @@ let LoadData = (data, forceSave) => {
 
     let setupSettings = () => {
         for (const key in settings) {
+            // TODO: Make a setup function for other types instead of just bools (maybe custom callback?)
             if (Object.hasOwnProperty.call(settings, key)) {
                 const val = settings[key];
                 let btn = updateSettingButton(key, val);
