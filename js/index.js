@@ -1,6 +1,18 @@
+// TODO: Fix Stud number format (sometimes it doesn't work correctly)
+// TODO: Add an toggle for number format stuff
+//       (I forgot what it's called but the script we use supports this)
+
+// TODO: Make an "Custom CSS Editor" or find an open sourced one that works
+//       (aka allows us to use it in anything we want)
+
 let settings = {
     MuteBGAudio: false,
     debugEnabled: false
+}
+
+let upgrades = {
+    unknown1: 0,
+    unknown2: 0,
 }
 
 let Studs = 0;
@@ -21,6 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 })
 
+// TODO: Switch function to updateSettingPage or something
+//       This way I can just do everything in it like styles and all that
 function updateSettingButton(key, val) {
     let btn;
 
@@ -84,6 +98,7 @@ let LoadData = (data, forceSave) => {
     clicksleft = data.clicksleft;
     moneygain = data.moneygain;
     settings = data.settings;
+    upgrades = data.upgrades;
 
     let cdate = new Date().getTime()/1000;
     let date = data.date;
@@ -124,6 +139,7 @@ let SaveData = (saveMsg = true) => {
     data.clicksleft = clicksleft;
     data.moneygain = moneygain;
     data.settings = settings;
+    data.upgrades = upgrades;
 
     return dataHandler.saveData(data, saveMsg);
 }
@@ -215,6 +231,8 @@ function toggleUpgradeMenu() {
 function updatePage(num) {
     let menu = document.querySelector("#Upgrades");
     let pages = document.querySelectorAll("#Upgrades .pageContent");
+
+    if (pages.length == 0) return;
 
     let currentPage = Number(menu.getAttribute("data-page"));
     let nextPage = Number(num);

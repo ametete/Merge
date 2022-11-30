@@ -22,6 +22,7 @@
         </audio>
         <div style="display: flex; flex-direction: row; justify-content: space-between;">
             <h1 id="Studs">Studs: 0</h1>
+            <!-- TODO: Fix Upgrades/Settings not being shown correctly based on screen size -->
             <div style="display: flex; flex-direction: row; justify-content: space-between;">
                 <h1 onclick="toggleSettings()" id="SettingsBtn">Settings</h1>
                 <h1 onclick="toggleUpgradeMenu()" id="UpgradesBtn">Upgrades</h1>
@@ -41,7 +42,6 @@
         <!-- TODO: Add support for the "Theme" system as this can use custom css -->
         <!-- TODO: Find out how to do custom css (tbh this might be too hard for me rn Lol) -->
         <div style="height: 0; box-shadow: none;" id="Settings">
-            <!--TEMP-->
             <hr>
             <h3>Import/Export Data</h3>
             <div class="content" data-dir="row">
@@ -55,14 +55,13 @@
                 <button class="settingBtn" onclick="dataHandler.Load()">Load Data</button>
             </div>
             <hr>
-            <!--TEMP-->
             <div class="content" data-dir="column">
                 <button class="settingBtn" data-setting="MuteBGAudio"><label>Mute Background Audio:</label> <a>???</a></button>
                 <button class="settingBtn" data-setting="debugEnabled"><label>Debug Enabled:</label> <a>???</a></button>
             </div>
             <hr>
         </div>
-        <!-- TODO: Auto generate pages? -->
+        <!-- TODO: Auto generate page(s), Auto generate topbar btns -->
         <div style="height: 0; box-shadow: none;" id="Upgrades" data-page="0">
             <div id="topbar">
                 <button onclick="updatePage('back')" id="pageBtn"><</button>
@@ -72,12 +71,10 @@
                 <button onclick="updatePage('next')" id="pageBtn">></button>
             </div>
             <hr>
-            <div style="display: none;" class="pageContent" data-page="0">
-                <a>This is the page content 0</a>
+            <!-- <div style="display: none;" class="pageContent" data-page="0">
             </div>
             <div style="display: none;" class="pageContent" data-page="1">
-                <a>This is the page content 1</a>
-            </div>
+            </div> -->
         </div>
         
         <h2 id="CurrentMerges">Current Merges:</h2>
