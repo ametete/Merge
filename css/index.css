@@ -173,7 +173,7 @@ footer {
     flex-direction: row;
 
     position: absolute;
-    bottom: 0;
+    bottom: 1vh;
     left: 50%;
 
     /* Text/Font stuff */
