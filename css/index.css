@@ -1,14 +1,9 @@
-h1 {
+body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
 h2 {
-    font-family: Arial, Helvetica, sans-serif;
     box-align: left; 
-}
-
-h3 {
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 #topbar {
@@ -24,7 +19,6 @@ h3 {
 }
 
 #MergeButton{
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
     padding: 8px 24px;
 }
@@ -45,7 +39,6 @@ h3 {
 }
 
 #Studs {
-    font-family: Arial, Helvetica, sans-serif;
     box-align: left; 
     margin: 5px;
 }
