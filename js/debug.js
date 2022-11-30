@@ -1,5 +1,3 @@
-// TODO: Learn how to do colors
-
 let debug = {
     enabled: false,
     log: (...data) => {

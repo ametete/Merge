@@ -4,6 +4,9 @@ let defaultData = {
     clicksleft: 10, // Clicks left
     moneygain: 0, // Money gain
 
+    // TODO: How should upgrades be done?
+    //       PageName: {upgrade1,upgrade2,...} or upgrade1,upgrade2,...
+    //       Either way the hardest part is functions for each one
     upgrades: { // Upgrades for the game
         unknown1: 0, // ???
         unknown2: 0, // ???
@@ -17,7 +20,7 @@ let defaultData = {
     },
 
     date: new Date().getTime()/1000 // Date in seconds
-} // default data
+}
 
 let currentData;
 
@@ -48,6 +51,7 @@ async function getFile() {
                 }
 
                 onfocus = () => {
+                    // 0.5s timeout to stop false positives
                     setTimeout(() => {
                         rej("File Selection Canceled");
                     }, 500);
@@ -59,8 +63,7 @@ async function getFile() {
 
         if (file == undefined) reject("Failed to get file");
 
-        console.log(file);
-
+        // Read the file data as UTF-8 and return content
         let reader = new FileReader();
         reader.readAsText(file,"UTF-8");
         reader.onload = res => {
@@ -83,6 +86,8 @@ async function saveAs(content) {
         await writable.write(content);
         writable.close();
     } else {
+        // TODO: Make an "copy" of showSaveFilePicker (aka name change and if possible save location)
+        //       mostly cause of how chrome based browsers work
         const save = document.createElement("a");
         
         save.href = URL.createObjectURL(content);
@@ -93,6 +98,7 @@ async function saveAs(content) {
     }
 }
 
+// Loop function to cut down on code on vaildation
 function loop(object, callback) {
     for (const key in object) {
         if (Object.hasOwnProperty.call(object, key)) {
@@ -141,12 +147,13 @@ let dataHandler = {
         if (data) currentData = dataHandler.validate(data);
         else currentData = dataHandler.getData(); // validate happens on get
         
-        currentData.date = new Date().getTime()/1000
+        currentData.date = new Date().getTime()/1000;
         localStorage.setItem("data", JSON.stringify(currentData));
         
         if (showMsg) {
             try {
                 document.querySelector("#SavingText").style.opacity = 1; 
+
                 setTimeout (() => {
                     document.querySelector("#SavingText").style.opacity = 0; 
                 }, 2500);
@@ -160,6 +167,8 @@ let dataHandler = {
      * @param {object?} data 
      */
     validate: (data) => {
+        // Is there an better way to do this? probably not /shrug
+        
         loop(defaultData, (i, v) => {
             if (data[i]) return;
             data[i] = v;
