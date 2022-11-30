@@ -2,6 +2,11 @@
     color-scheme: light;
 }
 
+hr {
+    background-color: black;
+    border-color: black;
+}
+
 #Upgrades, #Settings {
     background-color: #ececec;
     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.5);

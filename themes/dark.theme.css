@@ -2,6 +2,11 @@
     color-scheme: dark;
 }
 
+hr {
+    background-color: white;
+    border-color: white;
+}
+
 #Upgrades, #Settings {
     background-color: #363b41;
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);

@@ -6,6 +6,11 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+hr {
+    background-color: white;
+    border-color: white;
+}
+
 h2 {
     box-align: left; 
 }
