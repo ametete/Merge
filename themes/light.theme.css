@@ -1,3 +1,8 @@
 * {
     color-scheme: light;
 }
+
+#Upgrades, #Settings {
+    background-color: #ececec;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.5);
+}
