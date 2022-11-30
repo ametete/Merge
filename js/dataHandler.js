@@ -166,6 +166,6 @@ let dataHandler = {
     },
     Export: async () => {
         let json = JSON.stringify(dataHandler.Save(false), null, "\t");
-        await saveAs(new Blob([json], {type: "text/json"}));
+        await saveAs(new Blob([json], {type: "application/json"}));
     }
 }
